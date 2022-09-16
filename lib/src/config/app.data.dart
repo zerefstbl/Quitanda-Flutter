@@ -1,3 +1,4 @@
+import '../models/user.model.dart';
 import '../models/cart.item.model.dart';
 import '../models/item.model.dart';
 
@@ -86,3 +87,11 @@ List<CartItemModel> cartItems = [
     quantity: 2,
   ),
 ];
+
+UserModel user = UserModel(
+  phone: '99 9 9999-9999',
+  cpf: '999.999.999-99',
+  email: 'teste@teste.com',
+  name: 'Eduardo Oliveira',
+  password: '',
+);

@@ -4,6 +4,8 @@ import '../../../config/custom.colors.dart';
 
 import '../../../models/item.model.dart';
 
+import '../../products/product.screen.dart';
+
 import '../../../services/utils.services.dart';
 
 class ItemTile extends StatelessWidget {
@@ -20,51 +22,62 @@ class ItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Card(
-          elevation: 1,
-          shadowColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Imagem
-                Expanded(child: Image.asset(item.imgUrl)),
-
-                // Nome Produto
-                Text(
-                  item.itemName,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ProductScreen(item: item)));
+          },
+          child: Card(
+            elevation: 1,
+            shadowColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Imagem
+                  Expanded(
+                    child: Hero(
+                      tag: item.imgUrl,
+                      child: Image.asset(item.imgUrl),
+                    ),
                   ),
-                ),
 
-                // Preço - Unidade de Medida
-                Row(
-                  children: [
-                    Text(
-                      utilsServices.priceToCurrency(item.price),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: CustomColors.customSwatchColor,
-                      ),
+                  // Nome Produto
+                  Text(
+                    item.itemName,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      '/${item.unit}',
-                      style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                  ),
+
+                  // Preço - Unidade de Medida
+                  Row(
+                    children: [
+                      Text(
+                        utilsServices.priceToCurrency(item.price),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: CustomColors.customSwatchColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Text(
+                        '/${item.unit}',
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

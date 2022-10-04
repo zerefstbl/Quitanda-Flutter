@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quitanda/src/models/cart.item.model.dart';
 import 'package:quitanda/src/pages/cart/components/cart.tile.dart';
+import 'package:quitanda/src/pages/common_widgets/payment.dialog.dart';
 
 import '../../config/custom.colors.dart';
 import '../../config/app.data.dart' as appData;
@@ -18,7 +19,12 @@ class _CartTabState extends State<CartTab> {
   final UtilServices utilServices = UtilServices();
 
   void removeItemFromCart(CartItemModel cartItem) {
-    setState(() => appData.cartItems.remove(cartItem));
+    setState(() {
+      appData.cartItems.remove(cartItem);
+
+      utilServices.showToast(
+          message: '${cartItem.item.itemName} removido(a) do carrinho');
+    });
   }
 
   double cartTotalPrice() {
@@ -87,6 +93,17 @@ class _CartTabState extends State<CartTab> {
                   child: ElevatedButton(
                     onPressed: () async {
                       bool? result = await showOrderConfirmation();
+
+                      if (result ?? false) {
+                        showDialog(
+                          context: context,
+                          builder: (_) =>
+                              PaymentDialog(order: appData.orders.first),
+                        );
+                      } else {
+                        utilServices.showToast(
+                            message: 'Pedido não confirmado!');
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: CustomColors.customSwatchColor,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quitanda/src/config/custom.colors.dart';
+import 'package:quitanda/src/pages/auth/controller/auth.controller.dart';
 
 import '../common_widgets/custom.text.field.dart';
 
@@ -13,6 +15,8 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  final authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +24,9 @@ class _ProfileTabState extends State<ProfileTab> {
         title: const Text('Perfil do Usuário'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              authController.signOut();
+            },
             icon: const Icon(Icons.logout),
           )
         ],
